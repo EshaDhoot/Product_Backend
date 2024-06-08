@@ -10,6 +10,26 @@ class UserService {
             throw error;
         }
     }
+    async signIn(data) {
+        try {
+            const user = await User.findOne({email: data.email});
+            if (!user) {
+                throw {
+                    message: 'No user Found'
+                };
+            }
+            if (!user.comparePassword(data.password)) {
+                throw {
+                    message: 'Incorrect Password'
+                };
+            }
+            const token = user.genJWT();
+            return token;
+        } catch (error) {
+            console.log('something went wrong in signin in service layer')
+            throw error;
+        }
+    }
 };
 
 export default UserService;
