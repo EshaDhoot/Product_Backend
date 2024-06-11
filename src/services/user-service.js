@@ -38,6 +38,16 @@ class UserService {
         }
     }
 
+    async getProfile(profileId) {
+        try {
+            const profile = await User.findById(profileId);
+            return profile;
+        } catch (error) {
+            console.log('something went wrong in get profile in service layer')
+            throw error;
+        }
+    }
+
     async updateProfile(profileId, data) {
         try {
             const profile = await User.findByIdAndUpdate(profileId, data);

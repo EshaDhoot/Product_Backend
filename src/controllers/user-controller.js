@@ -82,3 +82,23 @@ export const updateProfile = async(req, res) => {
         });
     }
 }
+
+export const getProfile = async(req, res) => {
+    try {
+        const response = await userService.getProfile(req.params.id);
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "Successfully fetched  profile",
+            err: {}
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to get profile",
+            err: error
+        });
+    }
+}
