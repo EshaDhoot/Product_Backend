@@ -38,7 +38,9 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     role: {
-        enum: ['user', 'admin']
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     }
 }, {timestamps: true});
 
@@ -55,7 +57,7 @@ userSchema.methods.comparePassword = function compare(password) {
 };
 
 userSchema.methods.genJWT = function generate() {
-    return jwt.sign({id: this._id, email: this.email}, SECRET_KEY, {
+    return jwt.sign({id: this._id, email: this.email, password: this.password, role: this.role}, SECRET_KEY, {
         expiresIn: '24h'
     })
 };
